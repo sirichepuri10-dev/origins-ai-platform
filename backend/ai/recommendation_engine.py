@@ -24,13 +24,19 @@ class RecommendationEngine:
             }
             
             project_cat = project.get('category', '').lower()
-            is_match = project_cat == user_interest
+            project_name = project.get('name', '').lower()
+            project_desc = project.get('description', '').lower()
+            
+            is_match = project_cat == user_interest or user_interest in project_name or user_interest in project_desc
             
             # Check mapping if no direct match
             if not is_match and user_interest in category_map:
-                is_match = project_cat in category_map[user_interest]
+                for alt in category_map[user_interest]:
+                    if alt in project_cat or alt in project_name or alt in project_desc:
+                        is_match = True
+                        break
                 
-            interest_score = 30 if is_match else 0
+            interest_score = 30 if is_match else (15 if any(skill.lower() in project_desc for skill in user_skills) else 0)
 
             # Difficulty Match (10% weight)
             difficulty_score = 10 if project.get('difficulty', '').lower() == user_level else 5

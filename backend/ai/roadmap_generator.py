@@ -8,13 +8,17 @@ class RoadmapGenerator:
         
         # Find the best matching static roadmap first
         template = None
-        for roadmap in all_roadmaps:
-            if roadmap.get('goal', '').lower() == goal.lower():
-                template = roadmap
-                break
-        
-        if not template:
-            return None
+        if not template or not template.get('steps'):
+            # Generate a "Smart Fallback" roadmap for unknown or empty domains
+            template = {
+                "goal": goal,
+                "steps": [
+                    {"title": f"Core Foundations of {goal}", "desc": f"Master the fundamental concepts and basic syntax required for {goal}.", "skills": ["Basic Logic", "Syntax"]},
+                    {"title": "Industry Standard Tools", "desc": f"Learn the primary libraries and frameworks used by professionals in the {goal} domain.", "skills": ["Developer Tools", "Frameworks"]},
+                    {"title": f"Advanced {goal} Architectures", "desc": f"Deep dive into complex project structures and performance optimization for {goal}.", "skills": ["System Design", "Optimization"]},
+                    {"title": "Capstone Career Project", "desc": f"Build and deploy a comprehensive {goal} application to your portfolio.", "skills": ["Cloud Deployment", "Project Portfolio"]}
+                ]
+            }
             
         processed_steps = []
         for step in template.get('steps', []):

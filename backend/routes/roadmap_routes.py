@@ -20,13 +20,8 @@ def get_roadmap():
         roadmap_template = roadmap_service.get_roadmap(goal)
 
         if not roadmap_template:
-            # Smart fallback matching
-            if 'ai' in goal.lower():
-                roadmap_template = roadmap_service.get_roadmap('AI Engineer')
-            elif 'web' in goal.lower() or 'dev' in goal.lower():
-                roadmap_template = roadmap_service.get_roadmap('Full Stack Web Developer')
-            else:
-                return jsonify({"error": "No roadmap found for this goal."}), 404
+            # Fallback for dynamic roadmap generation without an exact DB match
+            roadmap_template = {"goal": goal, "steps": []}
 
         # Generate the dynamic roadmap with progress tracking
         # We wrap it in a list to satisfy the generator's template search or modify the generator
