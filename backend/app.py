@@ -33,12 +33,12 @@ def home():
 def seed():
     try:
         # Load seed projects
-        seed_path_projects = os.path.join(os.path.dirname(__file__), '..', 'database', 'seed_projects.json')
+        seed_path_projects = os.path.join(os.path.dirname(__file__), 'database', 'seed_projects.json')
         with open(seed_path_projects, 'r') as f:
             projects_data = json.load(f)
         
         # Load seed roadmaps
-        seed_path_roadmaps = os.path.join(os.path.dirname(__file__), '..', 'database', 'seed_roadmaps.json')
+        seed_path_roadmaps = os.path.join(os.path.dirname(__file__), 'database', 'seed_roadmaps.json')
         with open(seed_path_roadmaps, 'r') as f:
             roadmaps_data = json.load(f)
         
