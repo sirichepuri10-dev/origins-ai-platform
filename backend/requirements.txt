@@ -1,4 +1,7 @@
 Flask
-pymongo
+pymongo[srv]
 flask-cors
 python-dotenv
+requests
+gunicorn
+dnspython
