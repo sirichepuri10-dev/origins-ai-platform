@@ -32,24 +32,40 @@ def home():
 @app.route('/seed', methods=['GET'])
 def seed():
     try:
+        print("Seeding started...")
         # Load seed projects
-        seed_path_projects = os.path.join(os.path.dirname(__file__), 'database', 'seed_projects.json')
+        base_dir = os.path.dirname(__file__)
+        seed_path_projects = os.path.join(base_dir, 'database', 'seed_projects.json')
+        print(f"Checking projects at: {seed_path_projects}")
+        
+        if not os.path.exists(seed_path_projects):
+            return jsonify({"error": f"Path not found: {seed_path_projects}"}), 404
+            
         with open(seed_path_projects, 'r') as f:
             projects_data = json.load(f)
         
         # Load seed roadmaps
-        seed_path_roadmaps = os.path.join(os.path.dirname(__file__), 'database', 'seed_roadmaps.json')
+        seed_path_roadmaps = os.path.join(base_dir, 'database', 'seed_roadmaps.json')
+        print(f"Checking roadmaps at: {seed_path_roadmaps}")
+        
+        if not os.path.exists(seed_path_roadmaps):
+            return jsonify({"error": f"Path not found: {seed_path_roadmaps}"}), 404
+            
         with open(seed_path_roadmaps, 'r') as f:
             roadmaps_data = json.load(f)
         
+        print("Inserting data into MongoDB...")
         result_projects = project_service.seed_projects(projects_data)
         result_roadmaps = roadmap_service.seed_roadmaps(roadmaps_data)
         
-        if result_projects or result_roadmaps:
-            return jsonify({"message": "Database seeded successfully!"}), 201
-        else:
-            return jsonify({"message": "Database already contains data."}), 200
+        print(f"Result - Projects: {result_projects}, Roadmaps: {result_roadmaps}")
+        return jsonify({
+            "message": "Database seeded successfully!",
+            "projects_status": result_projects,
+            "roadmaps_status": result_roadmaps
+        }), 201
     except Exception as e:
+        print(f"SEED ERROR: {str(e)}")
         return jsonify({"error": str(e)}), 500
 
 if __name__ == "__main__":
