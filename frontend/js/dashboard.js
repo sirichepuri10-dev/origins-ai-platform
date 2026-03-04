@@ -28,18 +28,26 @@ document.addEventListener('DOMContentLoaded', async () => {
             // Loading States
             recommendationsContainer.innerHTML = '<div class="loading-spinner"></div>';
             githubContainer.innerHTML = '<div class="loading-spinner"></div>';
+            roadmapTimeline.innerHTML = '<div class="loading-spinner"></div>';
 
             // 1. Fetch Recommendations
+            console.log("Fetching recommendations for:", userData);
             const recData = await ApiService.getRecommendations(userData);
-            renderRecommendations(recData.recommended_projects);
+            console.log("Recommendation Response:", recData);
 
-            // Generate AI Logic Tip (Based on gap)
-            generateAiTip(recData.recommended_projects);
+            if (recData && recData.recommended_projects && recData.recommended_projects.length > 0) {
+                renderRecommendations(recData.recommended_projects);
+                generateAiTip(recData.recommended_projects);
+            } else {
+                recommendationsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No matching projects found. Try updating your skills in the sidebar!</p>';
+            }
 
             // 2. Fetch Roadmap
             const roadmapData = await ApiService.getRoadmap(userData);
             if (roadmapData && roadmapData.roadmap) {
                 renderRoadmap(roadmapData.roadmap, userData.skills);
+            } else {
+                roadmapTimeline.innerHTML = '<p>Roadmap generation unavailable.</p>';
             }
 
             // 3. GitHub Trending
@@ -47,10 +55,17 @@ document.addEventListener('DOMContentLoaded', async () => {
                 const githubData = await ApiService.getTrendingGithub(userData);
                 renderGithub(githubData.trending_repos);
             } catch (err) {
-                githubContainer.innerHTML = '<p>GitHub Service Offline. Please check API quota.</p>';
+                githubContainer.innerHTML = '<p>GitHub Service Offline.</p>';
             }
         } catch (err) {
-            console.error(err);
+            console.error("Dashboard Load Failure:", err);
+            recommendationsContainer.innerHTML = `
+                <div style="grid-column: 1/-1; padding: 3rem; background: rgba(239, 68, 68, 0.05); border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.2); text-align: center;">
+                    <h3 style="color: #ef4444; margin-bottom: 0.5rem;">Connection Failed</h3>
+                    <p style="color: var(--text-muted); font-size: 0.9rem;">The AI Engine couldn't be reached. Please check the backend logs.</p>
+                    <div style="font-family: monospace; font-size: 0.75rem; margin-top: 1rem; color: #ef4444;">Error: ${err.message}</div>
+                </div>
+            `;
         }
     }
 
