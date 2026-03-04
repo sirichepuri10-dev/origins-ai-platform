@@ -19,6 +19,11 @@
 </head>
 
 <body>
+    <div class="bg-overlay">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
     <div class="container">
         <header>
             <h1 class="logo">Origins</h1>
@@ -32,7 +37,7 @@
                     <form id="recommendation-form">
                         <div class="form-group">
                             <label for="name">Your Name</label>
-                            <input type="text" id="name" placeholder="E.g. Sai Ram" required>
+                            <input type="text" id="name" placeholder="E.g. sirichepuri10-dev" required>
                         </div>
 
                         <div class="form-group">
@@ -40,17 +45,22 @@
                             <input type="text" id="skills" placeholder="E.g. Python, HTML, CSS, React" required>
                         </div>
 
-                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
-                            <div>
-                                <label for="interest">Interested In</label>
-                                <select id="interest">
-                                    <option value="AI">Artificial Intelligence</option>
-                                    <option value="Web Dev">Web Development</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Data Science">Data Science</option>
-                                </select>
+                        <div class="form-group-grid">
+                            <div class="form-group">
+                                <label for="interest">Interested In (Type or Select)</label>
+                                <input list="interest-options" id="interest" placeholder="E.g. AI, Web Dev..." required>
+                                <datalist id="interest-options">
+                                    <option value="Artificial Intelligence">
+                                    <option value="Web Development">
+                                    <option value="Data Science">
+                                    <option value="Cybersecurity">
+                                    <option value="Cloud Computing">
+                                    <option value="Game Development">
+                                    <option value="Mobile Development">
+                                    <option value="Education">
+                                </datalist>
                             </div>
-                            <div>
+                            <div class="form-group">
                                 <label for="level">Current Level</label>
                                 <select id="level">
                                     <option value="Beginner">Beginner</option>
