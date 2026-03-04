@@ -15,12 +15,12 @@ app = Flask(__name__)
 CORS(app)
 app.config.from_object(Config)
 
-# Register Blueprints
-app.register_blueprint(recommendation_bp)
-app.register_blueprint(user_bp)
-app.register_blueprint(project_bp)
-app.register_blueprint(roadmap_bp)
-app.register_blueprint(github_bp)
+# Register Blueprints with /api prefix
+app.register_blueprint(recommendation_bp, url_prefix='/api')
+app.register_blueprint(user_bp, url_prefix='/api')
+app.register_blueprint(project_bp, url_prefix='/api')
+app.register_blueprint(roadmap_bp, url_prefix='/api')
+app.register_blueprint(github_bp, url_prefix='/api')
 
 project_service = ProjectService(Config.MONGO_URI)
 roadmap_service = RoadmapService(Config.MONGO_URI)
