@@ -1,0 +1,152 @@
+[
+    {
+        "id": 1,
+        "name": "Python",
+        "category": "Programming"
+    },
+    {
+        "id": 2,
+        "name": "Flask",
+        "category": "Framework"
+    },
+    {
+        "id": 3,
+        "name": "React",
+        "category": "Frontend"
+    },
+    {
+        "id": 4,
+        "name": "NLP",
+        "category": "AI"
+    },
+    {
+        "id": 5,
+        "name": "TensorFlow",
+        "category": "AI"
+    },
+    {
+        "id": 6,
+        "name": "JavaScript",
+        "category": "Programming"
+    },
+    {
+        "id": 7,
+        "name": "MongoDB",
+        "category": "Database"
+    },
+    {
+        "id": 8,
+        "name": "HTML",
+        "category": "Styling"
+    },
+    {
+        "id": 9,
+        "name": "CSS",
+        "category": "Styling"
+    },
+    {
+        "id": 10,
+        "name": "Scikit-Learn",
+        "category": "Data Science"
+    },
+    {
+        "id": 11,
+        "name": "Node.js",
+        "category": "Backend"
+    },
+    {
+        "id": 12,
+        "name": "PostgreSQL",
+        "category": "Database"
+    },
+    {
+        "id": 13,
+        "name": "Docker",
+        "category": "DevOps"
+    },
+    {
+        "id": 14,
+        "name": "AWS",
+        "category": "Cloud"
+    },
+    {
+        "id": 15,
+        "name": "Keras",
+        "category": "AI"
+    },
+    {
+        "id": 16,
+        "name": "PyTorch",
+        "category": "AI"
+    },
+    {
+        "id": 17,
+        "name": "Svelte",
+        "category": "Frontend"
+    },
+    {
+        "id": 18,
+        "name": "Go",
+        "category": "Programming"
+    },
+    {
+        "id": 19,
+        "name": "Rust",
+        "category": "Programming"
+    },
+    {
+        "id": 20,
+        "name": "Redux",
+        "category": "Frontend"
+    },
+    {
+        "id": 21,
+        "name": "Next.js",
+        "category": "Frontend"
+    },
+    {
+        "id": 22,
+        "name": "FastAPI",
+        "category": "Backend"
+    },
+    {
+        "id": 23,
+        "name": "Redis",
+        "category": "Database"
+    },
+    {
+        "id": 24,
+        "name": "Kubernetes",
+        "category": "DevOps"
+    },
+    {
+        "id": 25,
+        "name": "Terraform",
+        "category": "Cloud"
+    },
+    {
+        "id": 26,
+        "name": "Swift",
+        "category": "Mobile"
+    },
+    {
+        "id": 27,
+        "name": "Kotlin",
+        "category": "Mobile"
+    },
+    {
+        "id": 28,
+        "name": "NLTK",
+        "category": "AI"
+    },
+    {
+        "id": 29,
+        "name": "Pandas",
+        "category": "Data Science"
+    },
+    {
+        "id": 30,
+        "name": "NumPy",
+        "category": "Data Science"
+    }
+]

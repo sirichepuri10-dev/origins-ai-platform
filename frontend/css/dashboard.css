@@ -1,0 +1,90 @@
+/* Roadmap Specific Styles */
+.roadmap-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    position: relative;
+    padding-left: 2rem;
+}
+
+.roadmap-step {
+    flex: 1 1 300px;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--glass-border);
+    border-radius: 16px;
+    padding: 1.5rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.roadmap-step:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--primary);
+    transform: scale(1.02);
+}
+
+.roadmap-step.completed {
+    border-color: #00ff88;
+    background: rgba(0, 255, 136, 0.05);
+}
+
+.roadmap-step.completed::after {
+    content: '✓';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    color: #00ff88;
+    font-weight: 800;
+}
+
+.step-num {
+    position: absolute;
+    top: -10px;
+    left: -10px;
+    width: 30px;
+    height: 30px;
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 0.8rem;
+    color: #000;
+    box-shadow: 0 0 10px rgba(0, 236, 255, 0.5);
+}
+
+.step-topic {
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+    color: var(--primary);
+}
+
+.step-desc {
+    font-size: 0.9rem;
+    color: var(--text-muted);
+}
+
+/* Animations */
+.hero-card {
+    animation: slideUp 0.8s ease-out;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Specific button in dashboard */
+.pill:hover {
+    background-color: var(--primary);
+    color: #000;
+}

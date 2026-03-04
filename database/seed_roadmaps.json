@@ -1,0 +1,242 @@
+[
+    {
+        "id": 1,
+        "goal": "AI Engineer",
+        "steps": [
+            {
+                "step": 1,
+                "topic": "Python Fundamentals",
+                "skills": [
+                    "Python",
+                    "Control Structures",
+                    "Data Types"
+                ],
+                "desc": "Mastering syntax, data structures, and OOP."
+            },
+            {
+                "step": 2,
+                "topic": "Mathematics for AI",
+                "skills": [
+                    "Linear Algebra",
+                    "Calculus",
+                    "Probability"
+                ],
+                "desc": "Foundational math required for understanding ML algorithms."
+            },
+            {
+                "step": 3,
+                "topic": "Data Science Libraries",
+                "skills": [
+                    "NumPy",
+                    "Pandas",
+                    "Matplotlib",
+                    "Seaborn"
+                ],
+                "desc": "Learning essential libraries for data manipulation and visualization."
+            },
+            {
+                "step": 4,
+                "topic": "Machine Learning Foundations",
+                "skills": [
+                    "Scikit-Learn",
+                    "Regression",
+                    "Classification"
+                ],
+                "desc": "Implementing supervised and unsupervised learning algorithms."
+            },
+            {
+                "step": 5,
+                "topic": "Deep Learning Masterclass",
+                "skills": [
+                    "TensorFlow",
+                    "Keras",
+                    "Neural Networks"
+                ],
+                "desc": "Building neural networks, CNNs, and RNNs for image and sequence tasks."
+            },
+            {
+                "step": 6,
+                "topic": "Advanced NLP & Transformers",
+                "skills": [
+                    "NLTK",
+                    "Transformers",
+                    "LLMs",
+                    "NLP"
+                ],
+                "desc": "Exploring transformer architectures and large language models."
+            }
+        ]
+    },
+    {
+        "id": 2,
+        "goal": "Full Stack Web Developer",
+        "steps": [
+            {
+                "step": 1,
+                "topic": "Core Web Technologies",
+                "skills": [
+                    "HTML",
+                    "CSS",
+                    "Responsive Design"
+                ],
+                "desc": "Mastering page structure, modern styling, and responsive layouts."
+            },
+            {
+                "step": 2,
+                "topic": "Advanced JavaScript",
+                "skills": [
+                    "JavaScript",
+                    "ES6+",
+                    "Async-Await",
+                    "DOM"
+                ],
+                "desc": "Deep dive into JS engines, event loops, and asynchronous programming."
+            },
+            {
+                "step": 3,
+                "topic": "Modern Frontend Frameworks",
+                "skills": [
+                    "React",
+                    "Redux",
+                    "Hooks"
+                ],
+                "desc": "Building component-based UIs with state management."
+            },
+            {
+                "step": 4,
+                "topic": "Backend API Development",
+                "skills": [
+                    "Node.js",
+                    "Express",
+                    "Flask",
+                    "Backend"
+                ],
+                "desc": "Building robust RESTful APIs with Node.js or Python Flask."
+            },
+            {
+                "step": 5,
+                "topic": "Database Architecture",
+                "skills": [
+                    "PostgreSQL",
+                    "MongoDB",
+                    "NoSQL",
+                    "SQL"
+                ],
+                "desc": "Designing efficient schemas for both relational and document-based data."
+            },
+            {
+                "step": 6,
+                "topic": "Deployment & Cloud Ops",
+                "skills": [
+                    "Docker",
+                    "AWS",
+                    "CI-CD"
+                ],
+                "desc": "Containerization, cloud deployment, and automated testing pipelines."
+            }
+        ]
+    },
+    {
+        "id": 3,
+        "goal": "Data Scientist",
+        "steps": [
+            {
+                "step": 1,
+                "topic": "Programming for Data Science",
+                "skills": [
+                    "Python",
+                    "SQL",
+                    "Data Extraction"
+                ],
+                "desc": "Mastering Python and SQL for professional data handling."
+            },
+            {
+                "step": 2,
+                "topic": "Exploratory Data Analysis",
+                "skills": [
+                    "Pandas",
+                    "Matplotlib",
+                    "Statistics"
+                ],
+                "desc": "Analyzing datasets to find patterns and trends."
+            },
+            {
+                "step": 3,
+                "topic": "Statistical Modeling",
+                "skills": [
+                    "Hypothesis Testing",
+                    "Probability",
+                    "Distributions"
+                ],
+                "desc": "Using statistical methods to draw conclusions from data."
+            },
+            {
+                "step": 4,
+                "topic": "Predictive Analytics",
+                "skills": [
+                    "Scikit-Learn",
+                    "AutoML",
+                    "Time Series"
+                ],
+                "desc": "Building models that predict future trends and behaviors."
+            },
+            {
+                "step": 5,
+                "topic": "Data Visualization & Storytelling",
+                "skills": [
+                    "Tableau",
+                    "PowerBI",
+                    "Dashboarding"
+                ],
+                "desc": "Presenting data insights in a visually compelling way for stakeholders."
+            }
+        ]
+    },
+    {
+        "id": 4,
+        "goal": "Cybersecurity Specialist",
+        "steps": [
+            {
+                "step": 1,
+                "topic": "Networking Fundamentals",
+                "skills": [
+                    "TCP-IP",
+                    "DNS",
+                    "HTTP",
+                    "Packet Analysis"
+                ],
+                "desc": "Understanding how data travels across the web securely."
+            },
+            {
+                "step": 2,
+                "topic": "Security Operations & Analysis",
+                "skills": [
+                    "SIEM",
+                    "Splunk",
+                    "Incident Response"
+                ],
+                "desc": "Monitoring and responding to security threats in real-time."
+            },
+            {
+                "step": 3,
+                "topic": "Ethical Hacking",
+                "skills": [
+                    "Penetration Testing",
+                    "Metasploit",
+                    "Kali Linux"
+                ],
+                "desc": "Attacking your own systems to find and fix vulnerabilities."
+            },
+            {
+                "step": 4,
+                "topic": "Cloud Security",
+                "skills": [
+                    "AWS Security",
+                    "Azure Sentinel",
+                    "DevSecOps"
+                ],
+                "desc": "Securing modern cloud environments and infrastructures."
+            }
+        ]
+    }
+]

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origins | AI Project Recommendation System</title>
+    <meta name="description" content="AI-powered system to recommend top projects based on your skills and interests.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Styles -->
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Origins</h1>
+            <p class="subtitle">AI Project Recommender & Skill Guidance System</p>
+        </header>
+
+        <main id="app-container">
+            <!-- Hero Form Section -->
+            <section id="form-section">
+                <div class="hero-card">
+                    <form id="recommendation-form">
+                        <div class="form-group">
+                            <label for="name">Your Name</label>
+                            <input type="text" id="name" placeholder="E.g. Sai Ram" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="skills">Skills (Comma separated)</label>
+                            <input type="text" id="skills" placeholder="E.g. Python, HTML, CSS, React" required>
+                        </div>
+
+                        <div class="form-group" style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                            <div>
+                                <label for="interest">Interested In</label>
+                                <select id="interest">
+                                    <option value="AI">Artificial Intelligence</option>
+                                    <option value="Web Dev">Web Development</option>
+                                    <option value="Education">Education</option>
+                                    <option value="Data Science">Data Science</option>
+                                </select>
+                            </div>
+                            <div>
+                                <label for="level">Current Level</label>
+                                <select id="level">
+                                    <option value="Beginner">Beginner</option>
+                                    <option value="Intermediate">Intermediate</option>
+                                    <option value="Professional">Professional</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <button type="submit" class="btn-primary" id="submit-btn">Get AI Recommendations</button>
+                    </form>
+                </div>
+            </section>
+
+            <!-- Loading Spinner -->
+            <div id="loader" class="loading">
+                <div class="loading-spinner"></div>
+                <p style="margin-top: 2rem; color: var(--text-muted);">AI is analyzing your profile...</p>
+            </div>
+        </main>
+
+        <footer style="text-align: center; padding: 4rem 0; color: var(--text-muted); font-size: 0.9rem;">
+            <p>© 2026 Origins AI. Built by sirichepuri10-dev.</p>
+        </footer>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/api.js"></script>
+    <script src="js/main.js"></script>
+</body>
+
+</html>

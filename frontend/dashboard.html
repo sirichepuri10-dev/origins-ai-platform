@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | Origins AI</title>
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Outfit:wght@400;700;800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Origins Dashboard</h1>
+            <p class="subtitle">Personalized AI Project Recommendations & Skill Roadmap</p>
+        </header>
+
+        <!-- Main Content -->
+        <main>
+            <!-- Roadmap Section -->
+            <section id="roadmap-section" class="hero-card" style="margin-bottom: 4rem; display: none;">
+                <h2 style="font-size: 1.8rem; margin-bottom: 2rem; color: var(--primary);">🚀 Your Career Roadmap to
+                    <span id="roadmap-title">...</span>
+                </h2>
+                <div id="roadmap-timeline" class="roadmap-container">
+                    <!-- Roadmap steps will be injected here -->
+                </div>
+            </section>
+
+            <!-- Recommendations Section -->
+            <section id="results-section">
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem;">
+                    <h2 id="results-headline" style="font-size: 2rem; font-weight: 800;">Recommended Projects</h2>
+                    <a href="index.html" class="pill"
+                        style="cursor: pointer; padding: 0.8rem 1.5rem; text-decoration: none; display: block;">← New
+                        profile</a>
+                </div>
+
+                <div id="recommendations-container" class="recommendations-grid">
+                    <!-- Dynamic Recommendation Cards -->
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>AI is matching projects...</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- GitHub Trending Section -->
+            <section id="github-section" style="margin-top: 5rem;">
+                <h2 style="font-size: 2rem; font-weight: 800; margin-bottom: 2rem; text-align: center;">🔥 Trending on
+                    GitHub</h2>
+                <div id="github-container" class="recommendations-grid">
+                    <!-- GitHub project cards will be injected here -->
+                    <div class="loading">
+                        <div class="loading-spinner"></div>
+                        <p>Fetching real-world projects...</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+        <footer style="text-align: center; padding: 4rem 0; color: var(--text-muted); font-size: 0.9rem;">
+            <p>© 2026 Origins AI. Built by sirichepuri10-dev.</p>
+        </footer>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+
+</html>
