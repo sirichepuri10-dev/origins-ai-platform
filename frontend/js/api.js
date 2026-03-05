@@ -1,9 +1,9 @@
-const API_URL = "https://origins-ai-backend.onrender.com";
+const API_BASE_URL = "https://origins-ai-backend.onrender.com";
 
 const ApiService = {
     async getRecommendations(userData) {
         try {
-            const response = await fetch(`${API_URL}/api/recommend`, {
+            const response = await fetch(`${API_BASE_URL}/api/recommend`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -24,7 +24,7 @@ const ApiService = {
 
     async getRoadmap(userData) {
         try {
-            const response = await fetch(`${API_URL}/api/roadmap`, {
+            const response = await fetch(`${API_BASE_URL}/api/roadmap`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -48,7 +48,7 @@ const ApiService = {
 
     async getTrendingGithub(userData) {
         try {
-            const response = await fetch(`${API_URL}/api/github/trending`, {
+            const response = await fetch(`${API_BASE_URL}/api/github/trending`, {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json"
@@ -69,7 +69,7 @@ const ApiService = {
 
     async seedDatabase() {
         try {
-            const response = await fetch(`${API_URL}/seed`); // Seed stays at root since it is in app.py directly
+            const response = await fetch(`${API_BASE_URL}/seed`); // Seed stays at root since it is in app.py directly
             return await response.json();
         } catch (error) {
             console.error("Seed Error:", error);
