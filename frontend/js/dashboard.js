@@ -1,4 +1,12 @@
 document.addEventListener('DOMContentLoaded', async () => {
+    // Check if the page was refreshed. If so, clear data and go back to landing page.
+    const navigationEntries = performance.getEntriesByType('navigation');
+    if (navigationEntries.length > 0 && navigationEntries[0].type === 'reload') {
+        localStorage.removeItem('user_data');
+        window.location.href = 'index.html';
+        return;
+    }
+
     const recommendationsContainer = document.getElementById('recommendations-container');
     const roadmapTimeline = document.getElementById('roadmap-timeline');
     const roadmapTitle = document.getElementById('roadmap-title');
@@ -95,26 +103,26 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
 
     function renderRoadmap(roadmap, userSkills) {
-        const userSkillsSet = new Set(userSkills.map(s => s.toLowerCase()));
+        const userSkillsSet = new Set(userSkills.map(s => s.toLowerCase().trim()));
         roadmapTitle.innerText = `Full Roadmap: ${roadmap.goal}`;
         roadmapTimeline.innerHTML = '';
 
-        roadmap.steps.forEach(step => {
+        roadmap.steps.forEach((step, index) => {
             const stepSkills = step.skills || [];
-            const matchedSkills = stepSkills.filter(s => userSkillsSet.has(s.toLowerCase()));
+            const matchedSkills = stepSkills.filter(s => userSkillsSet.has(s.toLowerCase().trim()));
             const isCompleted = matchedSkills.length === stepSkills.length && stepSkills.length > 0;
 
             const stepEl = document.createElement('div');
             stepEl.className = `roadmap-step ${isCompleted ? 'completed' : ''}`;
 
             const skillsHtml = stepSkills.map(s => {
-                const hasSkill = userSkillsSet.has(s.toLowerCase());
+                const hasSkill = userSkillsSet.has(s.toLowerCase().trim());
                 return `<span class="pill ${hasSkill ? 'matched' : 'missing'}" style="font-size: 0.7rem;">${s}</span>`;
             }).join('');
 
             stepEl.innerHTML = `
-                <div class="step-num">${step.step}</div>
-                <div class="step-topic">${step.topic}</div>
+                <div class="step-num">${step.step || (index + 1)}</div>
+                <div class="step-topic">${step.title || step.topic}</div>
                 <div class="step-desc">${step.desc}</div>
                 <div class="skill-pills" style="margin-top: 1.2rem; border-top: 1px solid rgba(0,0,0,0.05); padding-top: 1rem;">
                     ${skillsHtml}
@@ -168,6 +176,18 @@ document.addEventListener('DOMContentLoaded', async () => {
         updateBtn.innerText = "Analyzing...";
         setTimeout(() => updateBtn.innerText = "Re-Analyze", 1500);
     });
+
+    // Reset Profile Logic
+    const resetProfileBtn = document.getElementById('reset-profile');
+    if (resetProfileBtn) {
+        resetProfileBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            if (confirm('Are you sure you want to change your profile? This will clear your current progress.')) {
+                localStorage.removeItem('user_data');
+                window.location.href = 'index.html';
+            }
+        });
+    }
 
     // Initial Load
     loadDashboard();

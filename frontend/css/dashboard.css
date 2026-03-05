@@ -372,15 +372,15 @@ body {
 }
 
 .pill.matched {
-    color: var(--primary);
-    border-color: var(--primary);
-    background: rgba(14, 165, 233, 0.05);
+    color: #10b981;
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
 }
 
 .pill.missing {
-    color: var(--secondary);
-    border-color: var(--secondary);
-    background: rgba(139, 92, 246, 0.05);
+    color: #f59e0b;
+    border-color: #f59e0b;
+    background: rgba(245, 158, 11, 0.05);
 }
 
 /* Suggestion Panel Style */
