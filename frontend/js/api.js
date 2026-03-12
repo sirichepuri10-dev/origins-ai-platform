@@ -1,6 +1,6 @@
-const API_BASE_URL = (window.location.origin === "null" || window.location.protocol === "file:") 
+const API_BASE_URL = (window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1") || window.location.protocol === "file:") 
     ? "http://127.0.0.1:5000" 
-    : window.location.origin;
+    : "https://origins-ai-backend.onrender.com";
 
 const ApiService = {
     async _request(url, options = {}) {
