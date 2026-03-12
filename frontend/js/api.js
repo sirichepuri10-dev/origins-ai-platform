@@ -1,6 +1,7 @@
-const API_BASE_URL = (window.location.origin.includes("localhost") || window.location.origin.includes("127.0.0.1") || window.location.protocol === "file:") 
-    ? "http://127.0.0.1:5000" 
-    : "https://origins-ai-backend.onrender.com";
+const API_BASE_URL = (typeof import.meta !== 'undefined' && import.meta.env && import.meta.env.VITE_API_URL) || 
+    (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1"
+        ? "http://127.0.0.1:5000"
+        : "https://origins-ai-backend.onrender.com");
 
 const ApiService = {
     async _request(url, options = {}) {
