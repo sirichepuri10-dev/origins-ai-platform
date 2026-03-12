@@ -113,7 +113,7 @@ const ApiService = {
             return data;
         } else {
             const text = await response.text();
-            console.error("Non-JSON Register Response:", text);
+            console.error("Non-JSON Register Response (First 100 chars):", text.substring(0, 100));
             throw new Error("Server Error: Received unexpected response. Please check if the backend is running.");
         }
     },

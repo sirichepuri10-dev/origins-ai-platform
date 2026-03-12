@@ -10,7 +10,9 @@ class Database:
     def get_db(cls):
         if cls._db is None:
             try:
-                cls._client = MongoClient(Config.MONGO_URI, serverSelectionTimeoutMS=5000)
+                cls._client = MongoClient(Config.MONGO_URI, 
+                                          serverSelectionTimeoutMS=5000,
+                                          tlsAllowInvalidCertificates=True)
                 # Force a call to check if connection is valid
                 cls._client.admin.command('ping')
                 cls._db = cls._client.get_database()

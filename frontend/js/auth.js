@@ -51,15 +51,17 @@ document.addEventListener('DOMContentLoaded', () => {
                 registerBtn.innerText = "Creating Account...";
                 const data = await ApiService.register(name, email, password);
                 
+                // Unified Auto-Login for both Guest and Real accounts
+                localStorage.setItem('auth_token', data.token);
+                localStorage.setItem('user_data', JSON.stringify(data.user));
+                
                 if (data.token === 'guest_token_limited') {
-                    localStorage.setItem('auth_token', data.token);
-                    localStorage.setItem('user_data', JSON.stringify(data.user));
                     alert("DEMO MODE: Entering dashboard as guest (Database offline).");
-                    window.location.href = 'dashboard.html';
                 } else {
-                    alert("Account created successfully! Please sign in.");
-                    window.location.href = 'login.html';
+                    alert("Account created successfully! Welcome to Origins.");
                 }
+                
+                window.location.href = 'dashboard.html';
             } catch (err) {
                 const message = err.message || "Registration failed. Please try again.";
                 showError(registerError, message);

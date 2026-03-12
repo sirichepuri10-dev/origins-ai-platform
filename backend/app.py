@@ -13,6 +13,7 @@ from routes.hackathon_routes import hackathon_bp
 from routes.resume_routes import resume_bp
 from services.project_service import ProjectService
 from services.roadmap_service import RoadmapService
+from database.db import db
 import json
 import os
 
@@ -38,6 +39,15 @@ app.register_blueprint(resume_bp, url_prefix='/api')
 project_service = ProjectService(Config.MONGO_URI)
 roadmap_service = RoadmapService(Config.MONGO_URI)
 
+@app.before_request
+def log_request_info():
+    if not request.path.startswith('/static'):
+        print(f"📡 Request: {request.method} {request.path}")
+
+@app.route('/health')
+def health():
+    return jsonify({"status": "ok", "db": "online" if db else "offline"})
+
 @app.route('/')
 def home():
     return app.send_static_file('index.html')
@@ -58,12 +68,21 @@ def serve_static(path):
 @app.errorhandler(404)
 def not_found(e):
     if request.path.startswith('/api/'):
-        return jsonify({"error": "Not found"}), 404
+        print(f"❌ 404 Not Found: {request.path}")
+        return jsonify({"error": f"Route {request.path} not found"}), 404
+    return e
+
+@app.errorhandler(405)
+def method_not_allowed(e):
+    if request.path.startswith('/api/'):
+        print(f"❌ 405 Method Not Allowed: {request.path}")
+        return jsonify({"error": "Method not allowed"}), 405
     return e
 
 @app.errorhandler(500)
 def server_error(e):
     if request.path.startswith('/api/'):
+        print(f"❌ 500 Server Error: {request.path}")
         return jsonify({"error": "Internal server error"}), 500
     return e
 
@@ -93,7 +112,6 @@ def seed():
             roadmaps_data = json.load(f)
         
         print("Check if Database is available...")
-        from database.db import db
         if db is None:
              print("⚠️ DB skipped - continuing with local fallback mode.")
              return jsonify({
