@@ -27,13 +27,6 @@ def register():
             "user": {"name": name, "email": email, "skills": [], "interests": [], "level": "Beginner"},
             "token": "guest_token_limited"
         }), 201
-    name = data.get('name')
-    email = data.get('email')
-    password = data.get('password')
-
-    if not all([name, email, password]):
-        return jsonify({"error": "Missing required fields"}), 400
-
     users_col = db.users
     if users_col.find_one({"email": email}):
         return jsonify({"error": "User already exists"}), 400

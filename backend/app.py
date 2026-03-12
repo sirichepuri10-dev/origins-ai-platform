@@ -23,6 +23,7 @@ app = Flask(__name__,
             static_url_path='')
 CORS(app)
 app.config.from_object(Config)
+app.url_map.strict_slashes = False
 
 # Register Blueprints with /api prefix
 app.register_blueprint(recommendation_bp, url_prefix='/api')
@@ -57,7 +58,8 @@ def home():
 def serve_static(path):
     # Don't handle /api/ paths here
     if path.startswith('api/'):
-        return jsonify({"error": "Resource not found"}), 404
+        print(f"⚠️ API Route not found in catch-all: /api/{path.replace('api/', '')}")
+        return jsonify({"error": f"API Route /api/{path.replace('api/', '')} not found on this server"}), 404
         
     try:
         return app.send_static_file(path)
