@@ -122,6 +122,11 @@ def seed():
                  "note": "All improvements (Hackathons, Resources, etc.) are loaded from local JSON. You can already see them on the dashboard!"
              }), 201
 
+        print("Inserting data into MongoDB...")
+        res_count = 0
+        hack_count = 0
+        int_count = 0
+        
         # Load extra seed data (resources, hackathons, interview questions)
         seed_path_extra = os.path.join(base_dir, 'database', 'seed_extra.json')
         if os.path.exists(seed_path_extra):
@@ -131,21 +136,28 @@ def seed():
             if 'resources' in extra_data:
                 db.resources.delete_many({})
                 db.resources.insert_many(extra_data['resources'])
+                res_count = len(extra_data['resources'])
             if 'hackathons' in extra_data:
                 db.hackathons.delete_many({})
                 db.hackathons.insert_many(extra_data['hackathons'])
+                hack_count = len(extra_data['hackathons'])
             if 'interview_questions' in extra_data:
                 db.interview_questions.delete_many({})
                 db.interview_questions.insert_many(extra_data['interview_questions'])
+                int_count = len(extra_data['interview_questions'])
 
-        print("Inserting data into MongoDB...")
         result_projects = project_service.seed_projects(projects_data)
         result_roadmaps = roadmap_service.seed_roadmaps(roadmaps_data)
         
         return jsonify({
             "message": "Database seeded successfully!",
-            "projects_status": result_projects,
-            "roadmaps_status": result_roadmaps
+            "cloud_sync": {
+                "projects": len(projects_data),
+                "roadmaps": len(roadmaps_data),
+                "resources": res_count,
+                "hackathons": hack_count,
+                "interviews": int_count
+            }
         }), 201
     except Exception as e:
         print(f"SEED ERROR: {str(e)}")

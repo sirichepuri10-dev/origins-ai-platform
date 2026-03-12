@@ -4,58 +4,96 @@
       "skill": "Python",
       "links": [
         "https://docs.python.org/3/tutorial/",
-        "https://www.learnpython.org/",
-        "https://realpython.com/"
+        "https://realpython.com/",
+        "https://www.pythontutorial.net/"
       ]
     },
     {
       "skill": "React",
       "links": [
-        "https://reactjs.org/docs/getting-started.html",
-        "https://www.freecodecamp.org/news/learn-react-course-2022/",
-        "https://scrimba.com/learn/learnreact"
+        "https://react.dev/learn",
+        "https://www.patterns.dev/posts/react-hooks/",
+        "https://beta.reactjs.org/learn"
       ]
     },
     {
-      "skill": "MongoDB",
+      "skill": "Node.js",
       "links": [
-        "https://university.mongodb.com/",
-        "https://docs.mongodb.com/manual/tutorial/getting-started/",
-        "https://www.w3schools.com/mongodb/"
+        "https://nodejs.dev/en/learn/",
+        "https://github.com/goldbergyoni/nodebestpractices"
+      ]
+    },
+    {
+      "skill": "Machine Learning",
+      "links": [
+        "https://www.coursera.org/learn/machine-learning",
+        "https://machinelearningmastery.com/"
+      ]
+    },
+    {
+      "skill": "Data Science",
+      "links": [
+        "https://www.kaggle.com/learn",
+        "https://towardsdatascience.com/"
+      ]
+    },
+    {
+      "skill": "DevOps",
+      "links": [
+        "https://roadmap.sh/devops",
+        "https://docs.docker.com/get-started/"
       ]
     }
   ],
   "hackathons": [
     {
-      "name": "Global AI Hackathon",
-      "problem_statement": "Innovate with AI for social good.",
-      "skills": ["Python", "AI", "Machine Learning"],
+      "name": "Global AI Innovation Challenge",
+      "problem_statement": "Develop AI solutions to solve climate change monitoring problems using satellite data.",
+      "skills": ["Python", "TensorFlow", "Scikit-Learn"],
       "link": "https://devpost.com/hackathons"
     },
     {
-      "name": "Web3 Builders",
-      "problem_statement": "Build decentralized applications.",
-      "skills": ["JavaScript", "Solidity", "React"],
-      "link": "https://ethglobal.com/"
+      "name": "Fullstack Future Build",
+      "problem_statement": "Create a seamless peer-to-peer lending platform using modern web technologies.",
+      "skills": ["React", "Node.js", "MongoDB"],
+      "link": "https://mlh.io/seasons/2024/events"
+    },
+    {
+      "name": "FinTech Disrupt 2026",
+      "problem_statement": "Reimagine the digital banking experience for Gen Z users.",
+      "skills": ["Mobile Dev", "React Native", "UI/UX"],
+      "link": "https://hackathon.com"
     }
   ],
   "interview_questions": [
     {
       "technology": "Python",
       "questions": [
-        "What are the benefits of using Python?",
-        "Explain PEP 8.",
-        "What is the difference between a list and a tuple?",
-        "How is memory managed in Python?"
+        "What are the key differences between Python 2 and Python 3?",
+        "Explain the concept of decorators in Python.",
+        "How do you handle multithreading in Python?",
+        "What is the Global Interpreter Lock (GIL)?",
+        "Describe the use of 'self' in Python classes."
       ]
     },
     {
       "technology": "React",
       "questions": [
-        "What is JSX?",
-        "Explain the Virtual DOM.",
-        "What are hooks in React?",
-        "What is the difference between state and props?"
+        "What is the difference between functional and class components?",
+        "How do you manage global state in a React application?",
+        "What is reconciliation in React?",
+        "Explain the purpose of 'key' prop in lists.",
+        "How do you optimize performance in a React app?"
+      ]
+    },
+    {
+      "technology": "Node.js",
+      "questions": [
+        "What is the event loop in Node.js?",
+        "Explain the difference between process.nextTick() and setImmediate().",
+        "How do you handle child processes in Node.js?",
+        "What are streams and why are they useful?",
+        "Describe the 'require' vs 'import' module systems."
       ]
     }
   ]
