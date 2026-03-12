@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Origins | Anti-Gravity Dashboard</title>
+    <title>Origins | AI Dashboard</title>
     <link rel="stylesheet" href="css/dashboard.css">
 </head>
 
@@ -93,6 +93,45 @@
                 </div>
                 <div id="github-container" class="recommendations-grid">
                     <!-- GitHub cards here -->
+                </div>
+            </section>
+
+            <!-- Learning Resources -->
+            <section id="resources-section">
+                <div class="section-header">
+                    <h2>Skill Deep Dive</h2>
+                    <p>Curated resources to bridge your skill gaps</p>
+                </div>
+                <div id="resources-container" class="recommendations-grid">
+                    <!-- Resource links here -->
+                </div>
+            </section>
+
+            <!-- Hackathon Explorer -->
+            <section id="hackathon-section">
+                <div class="section-header">
+                    <h2>Live Hackathons</h2>
+                    <p>Put your skills to the test in real competitions</p>
+                </div>
+                <div id="hackathon-container" class="recommendations-grid">
+                    <!-- Hackathons here -->
+                </div>
+            </section>
+
+            <!-- Interview Preparation -->
+            <section id="interview-section">
+                <div class="section-header">
+                    <h2>Interview Preparation</h2>
+                    <p>Practice common technical questions for your stack</p>
+                    <select id="interview-tech-select" class="btn-secondary" style="padding: 0.5rem; margin-top: 1rem;">
+                        <option value="Python">Python</option>
+                        <option value="React">React</option>
+                    </select>
+                </div>
+                <div id="interview-container" class="suggestion-card" style="display: block;">
+                    <ul id="interview-list" style="list-style: none; padding: 0;">
+                        <!-- Questions here -->
+                    </ul>
                 </div>
             </section>
         </main>

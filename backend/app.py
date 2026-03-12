@@ -6,12 +6,20 @@ from routes.user_routes import user_bp
 from routes.project_routes import project_bp
 from routes.roadmap_routes import roadmap_bp
 from routes.github_routes import github_bp
+from routes.auth_routes import auth_bp
+from routes.resource_routes import resource_bp
+from routes.interview_routes import interview_bp
+from routes.hackathon_routes import hackathon_bp
+from routes.resume_routes import resume_bp
 from services.project_service import ProjectService
 from services.roadmap_service import RoadmapService
 import json
 import os
 
-app = Flask(__name__)
+# Configure Flask to serve the frontend folder as static files
+app = Flask(__name__, 
+            static_folder='../frontend', 
+            static_url_path='')
 CORS(app)
 app.config.from_object(Config)
 
@@ -21,13 +29,23 @@ app.register_blueprint(user_bp, url_prefix='/api')
 app.register_blueprint(project_bp, url_prefix='/api')
 app.register_blueprint(roadmap_bp, url_prefix='/api')
 app.register_blueprint(github_bp, url_prefix='/api')
+app.register_blueprint(auth_bp, url_prefix='/api')
+app.register_blueprint(resource_bp, url_prefix='/api')
+app.register_blueprint(interview_bp, url_prefix='/api')
+app.register_blueprint(hackathon_bp, url_prefix='/api')
+app.register_blueprint(resume_bp, url_prefix='/api')
 
 project_service = ProjectService(Config.MONGO_URI)
 roadmap_service = RoadmapService(Config.MONGO_URI)
 
 @app.route('/')
 def home():
-    return jsonify({"message": "Welcome to Origins AI Project Recommendation API!"})
+    return app.send_static_file('index.html')
+
+# Catch-all route to serve other frontend files (dashboard.html, login.html, etc.)
+@app.route('/<path:path>')
+def serve_static(path):
+    return app.send_static_file(path)
 
 @app.route('/seed', methods=['GET'])
 def seed():
@@ -54,11 +72,36 @@ def seed():
         with open(seed_path_roadmaps, 'r') as f:
             roadmaps_data = json.load(f)
         
+        print("Check if Database is available...")
+        from database.db import db
+        if db is None:
+             print("⚠️ DB skipped - continuing with local fallback mode.")
+             return jsonify({
+                 "message": "Backend is running in LOCAL FALLBACK mode (MongoDB unavailable).",
+                 "status": "Success (Local)",
+                 "note": "All improvements (Hackathons, Resources, etc.) are loaded from local JSON. You can already see them on the dashboard!"
+             }), 201
+
+        # Load extra seed data (resources, hackathons, interview questions)
+        seed_path_extra = os.path.join(base_dir, 'database', 'seed_extra.json')
+        if os.path.exists(seed_path_extra):
+            with open(seed_path_extra, 'r') as f:
+                extra_data = json.load(f)
+            
+            if 'resources' in extra_data:
+                db.resources.delete_many({})
+                db.resources.insert_many(extra_data['resources'])
+            if 'hackathons' in extra_data:
+                db.hackathons.delete_many({})
+                db.hackathons.insert_many(extra_data['hackathons'])
+            if 'interview_questions' in extra_data:
+                db.interview_questions.delete_many({})
+                db.interview_questions.insert_many(extra_data['interview_questions'])
+
         print("Inserting data into MongoDB...")
         result_projects = project_service.seed_projects(projects_data)
         result_roadmaps = roadmap_service.seed_roadmaps(roadmaps_data)
         
-        print(f"Result - Projects: {result_projects}, Roadmaps: {result_roadmaps}")
         return jsonify({
             "message": "Database seeded successfully!",
             "projects_status": result_projects,

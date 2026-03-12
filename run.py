@@ -11,4 +11,4 @@ if __name__ == '__main__':
     # Add a check to suggest seeding the database if it's the first run
     print("🚀 Starting Origins AI Project Recommendation API...")
     print("💡 Don't forget to visit http://localhost:5000/seed to initialize your project data!")
-    app.run(debug=True, port=5000)
+    app.run(debug=True, host="0.0.0.0", port=5000)

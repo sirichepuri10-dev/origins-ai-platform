@@ -1,0 +1,62 @@
+{
+  "resources": [
+    {
+      "skill": "Python",
+      "links": [
+        "https://docs.python.org/3/tutorial/",
+        "https://www.learnpython.org/",
+        "https://realpython.com/"
+      ]
+    },
+    {
+      "skill": "React",
+      "links": [
+        "https://reactjs.org/docs/getting-started.html",
+        "https://www.freecodecamp.org/news/learn-react-course-2022/",
+        "https://scrimba.com/learn/learnreact"
+      ]
+    },
+    {
+      "skill": "MongoDB",
+      "links": [
+        "https://university.mongodb.com/",
+        "https://docs.mongodb.com/manual/tutorial/getting-started/",
+        "https://www.w3schools.com/mongodb/"
+      ]
+    }
+  ],
+  "hackathons": [
+    {
+      "name": "Global AI Hackathon",
+      "problem_statement": "Innovate with AI for social good.",
+      "skills": ["Python", "AI", "Machine Learning"],
+      "link": "https://devpost.com/hackathons"
+    },
+    {
+      "name": "Web3 Builders",
+      "problem_statement": "Build decentralized applications.",
+      "skills": ["JavaScript", "Solidity", "React"],
+      "link": "https://ethglobal.com/"
+    }
+  ],
+  "interview_questions": [
+    {
+      "technology": "Python",
+      "questions": [
+        "What are the benefits of using Python?",
+        "Explain PEP 8.",
+        "What is the difference between a list and a tuple?",
+        "How is memory managed in Python?"
+      ]
+    },
+    {
+      "technology": "React",
+      "questions": [
+        "What is JSX?",
+        "Explain the Virtual DOM.",
+        "What are hooks in React?",
+        "What is the difference between state and props?"
+      ]
+    }
+  ]
+}

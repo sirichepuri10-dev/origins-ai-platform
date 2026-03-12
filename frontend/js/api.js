@@ -1,4 +1,4 @@
-const API_BASE_URL = "https://origins-ai-backend.onrender.com";
+const API_BASE_URL = window.location.origin; // Dynamically uses the current server URL
 
 const ApiService = {
     async getRecommendations(userData) {
@@ -69,11 +69,65 @@ const ApiService = {
 
     async seedDatabase() {
         try {
-            const response = await fetch(`${API_BASE_URL}/seed`); // Seed stays at root since it is in app.py directly
+            const response = await fetch(`${API_BASE_URL}/seed`);
             return await response.json();
         } catch (error) {
             console.error("Seed Error:", error);
             throw error;
         }
+    },
+
+    // --- Authentication ---
+    async login(email, password) {
+        const response = await fetch(`${API_BASE_URL}/api/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+        if (!response.ok) throw new Error("Login failed");
+        return await response.json();
+    },
+
+    async register(name, email, password) {
+        const response = await fetch(`${API_BASE_URL}/api/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ name, email, password })
+        });
+        if (!response.ok) throw new Error("Registration failed");
+        return await response.json();
+    },
+
+    // --- Resources ---
+    async getResources(skill) {
+        const url = skill ? `${API_BASE_URL}/api/resources?skill=${skill}` : `${API_BASE_URL}/api/resources`;
+        const response = await fetch(url);
+        return await response.json();
+    },
+
+    // --- Hackathons ---
+    async getHackathons(skills = []) {
+        const response = await fetch(`${API_BASE_URL}/api/hackathons`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ skills })
+        });
+        return await response.json();
+    },
+
+    // --- Interview Preparation ---
+    async getInterviewQuestions(tech) {
+        const response = await fetch(`${API_BASE_URL}/api/interview?tech=${tech}`);
+        return await response.json();
+    },
+
+    // --- Resume Builder ---
+    async generateResume(userData, projectData) {
+        const response = await fetch(`${API_BASE_URL}/api/resume/generate`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ user: userData, project: projectData })
+        });
+        return await response.json();
     }
 };

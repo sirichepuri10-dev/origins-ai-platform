@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Origins | Sign In</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/dashboard.css">
+    <style>
+        .auth-container {
+            max-width: 400px;
+            margin: 100px auto;
+            padding: 2.5rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: var(--shadow-xl);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+        .auth-input-group {
+            margin-bottom: 1.5rem;
+            text-align: left;
+        }
+        .auth-input-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+        }
+        .auth-input-group input {
+            width: 100%;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            color: white;
+            font-size: 1rem;
+            transition: all 0.3s;
+        }
+        .auth-input-group input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 4px rgba(139, 92, 246, 0.1);
+        }
+        .auth-btn {
+            width: 100%;
+            padding: 1rem;
+            margin-top: 1rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #2563eb 100%);
+            border: none;
+            border-radius: 12px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(37, 99, 235, 0.3);
+        }
+        .auth-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(37, 99, 235, 0.4);
+            filter: brightness(1.1);
+        }
+        .auth-link {
+            display: block;
+            margin-top: 1.5rem;
+            font-size: 0.9rem;
+            color: var(--text-muted);
+            text-decoration: none;
+        }
+        .auth-link span { color: var(--secondary); font-weight: 500; }
+        .error-msg {
+            color: #ef4444;
+            font-size: 0.85rem;
+            margin-bottom: 1rem;
+            display: none;
+        }
+    </style>
+</head>
+<body class="landing-bg">
+    <div class="bg-overlay">
+        <div class="orb orb-1"></div>
+        <div class="orb orb-2"></div>
+        <div class="orb orb-3"></div>
+    </div>
+
+    <div class="auth-container">
+        <h1 class="logo" style="font-size: 2.5rem; margin-bottom: 0.5rem;">Origins</h1>
+        <p style="color: var(--text-muted); margin-bottom: 2rem;">Sign in to your personalized career path</p>
+        
+        <div id="login-error" class="error-msg">Invalid credentials. Please try again.</div>
+
+        <div class="auth-input-group">
+            <label>Email Address</label>
+            <input type="email" id="email" placeholder="name@company.com">
+        </div>
+        <div class="auth-input-group">
+            <label>Password</label>
+            <input type="password" id="password" placeholder="••••••••">
+        </div>
+
+        <button id="login-btn" class="auth-btn">Sign In</button>
+        
+        <a href="register.html" class="auth-link">Don't have an account? <span>Create one</span></a>
+        <a href="index.html" class="auth-link" style="margin-top: 0.5rem;">← Back to Landing</a>
+    </div>
+
+    <script src="js/api.js"></script>
+    <script src="js/auth.js"></script>
+</body>
+</html>

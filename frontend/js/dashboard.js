@@ -11,6 +11,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     const roadmapTimeline = document.getElementById('roadmap-timeline');
     const roadmapTitle = document.getElementById('roadmap-title');
     const githubContainer = document.getElementById('github-container');
+    const resourcesContainer = document.getElementById('resources-container');
+    const hackathonContainer = document.getElementById('hackathon-container');
+    const interviewList = document.getElementById('interview-list');
+    const interviewTechSelect = document.getElementById('interview-tech-select');
     const aiSmartTip = document.getElementById('ai-smart-tip');
     const updateBtn = document.getElementById('update-btn');
     const refineSkillsInput = document.getElementById('refine-skills');
@@ -20,16 +24,22 @@ document.addEventListener('DOMContentLoaded', async () => {
     const userDisplayLevel = document.getElementById('user-display-level');
 
     let userData = JSON.parse(localStorage.getItem('user_data'));
+    let authToken = localStorage.getItem('auth_token');
 
-    if (!userData) {
-        window.location.href = 'index.html';
+    if (!authToken || !userData) {
+        window.location.href = 'login.html';
         return;
     }
 
     // Initialize UI
     userDisplayName.innerText = userData.name || "Developer";
-    userDisplayLevel.innerText = `${userData.level} Interested in ${userData.interest}`;
-    refineSkillsInput.value = userData.skills.join(', ');
+    
+    // Support both interest and interests (plural) from different origins
+    const userInterest = userData.interest || (userData.interests && userData.interests[0]) || "AI";
+    userData.interest = userInterest; // Normalize
+    
+    userDisplayLevel.innerText = `${userData.level || "Beginner"} Interested in ${userInterest}`;
+    refineSkillsInput.value = (userData.skills || []).join(', ');
 
     async function loadDashboard() {
         try {
@@ -37,43 +47,53 @@ document.addEventListener('DOMContentLoaded', async () => {
             recommendationsContainer.innerHTML = '<div class="loading-spinner"></div>';
             githubContainer.innerHTML = '<div class="loading-spinner"></div>';
             roadmapTimeline.innerHTML = '<div class="loading-spinner"></div>';
+            resourcesContainer.innerHTML = '<div class="loading-spinner"></div>';
+            hackathonContainer.innerHTML = '<div class="loading-spinner"></div>';
 
             // 1. Fetch Recommendations
-            console.log("Fetching recommendations for:", userData);
-            const recData = await ApiService.getRecommendations(userData);
-            console.log("Recommendation Response:", recData);
-
-            if (recData && recData.recommended_projects && recData.recommended_projects.length > 0) {
-                renderRecommendations(recData.recommended_projects);
-                generateAiTip(recData.recommended_projects);
-            } else {
-                recommendationsContainer.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-muted);">No matching projects found. Try updating your skills in the sidebar!</p>';
-            }
+            try {
+                const recData = await ApiService.getRecommendations(userData);
+                if (recData && recData.recommended_projects) {
+                    renderRecommendations(recData.recommended_projects);
+                    generateAiTip(recData.recommended_projects);
+                } else {
+                    recommendationsContainer.innerHTML = '<p>No recommendations found.</p>';
+                }
+            } catch (e) { recommendationsContainer.innerHTML = '<p>Recommender Offline</p>'; }
 
             // 2. Fetch Roadmap
-            const roadmapData = await ApiService.getRoadmap(userData);
-            if (roadmapData && roadmapData.roadmap) {
-                renderRoadmap(roadmapData.roadmap, userData.skills);
-            } else {
-                roadmapTimeline.innerHTML = '<p>Roadmap generation unavailable.</p>';
-            }
+            try {
+                const roadmapData = await ApiService.getRoadmap(userData);
+                if (roadmapData && roadmapData.roadmap) {
+                    renderRoadmap(roadmapData.roadmap, userData.skills || []);
+                } else {
+                    roadmapTimeline.innerHTML = '<p>No milestone data available.</p>';
+                }
+            } catch (e) { roadmapTimeline.innerHTML = '<p>Roadmap Tracker Offline</p>'; }
 
             // 3. GitHub Trending
             try {
                 const githubData = await ApiService.getTrendingGithub(userData);
                 renderGithub(githubData.trending_repos);
-            } catch (err) {
-                githubContainer.innerHTML = '<p>GitHub Service Offline.</p>';
-            }
+            } catch (err) { githubContainer.innerHTML = '<p>GitHub Connect Offline</p>'; }
+
+            // 4. Resources
+            try {
+                const resourceData = await ApiService.getResources();
+                renderResources(resourceData.resources || []);
+            } catch (e) { resourcesContainer.innerHTML = '<p>Resources Offline</p>'; }
+
+            // 5. Hackathons
+            try {
+                const hackathonData = await ApiService.getHackathons(userData.skills || []);
+                renderHackathons(hackathonData.hackathons || []);
+            } catch (e) { hackathonContainer.innerHTML = '<p>Hackathons Offline</p>'; }
+
+            // 6. Interview Questions Initial
+            loadInterviewQuestions(interviewTechSelect.value || (userData.skills && userData.skills[0]) || "Python");
+
         } catch (err) {
             console.error("Dashboard Load Failure:", err);
-            recommendationsContainer.innerHTML = `
-                <div style="grid-column: 1/-1; padding: 3rem; background: rgba(239, 68, 68, 0.05); border-radius: 20px; border: 1px solid rgba(239, 68, 68, 0.2); text-align: center;">
-                    <h3 style="color: #ef4444; margin-bottom: 0.5rem;">Connection Failed</h3>
-                    <p style="color: var(--text-muted); font-size: 0.9rem;">The AI Engine couldn't be reached. Please check the backend logs.</p>
-                    <div style="font-family: monospace; font-size: 0.75rem; margin-top: 1rem; color: #ef4444;">Error: ${err.message}</div>
-                </div>
-            `;
         }
     }
 
@@ -96,8 +116,13 @@ document.addEventListener('DOMContentLoaded', async () => {
                     ${matchedPills}
                     ${missingPills}
                 </div>
-                <a href="${project.github_link}" target="_blank" class="btn-primary">View Project Repository</a>
+                <div style="display: flex; gap: 10px; margin-top: 15px;">
+                    <a href="${project.github_link}" target="_blank" class="btn-primary" style="flex: 1; text-align: center;">Repository</a>
+                    <button class="btn-secondary resume-btn" style="flex: 1;">Get Resume</button>
+                </div>
             `;
+            const resumeBtn = card.querySelector('.resume-btn');
+            resumeBtn.onclick = () => handleResumeGen(project);
             recommendationsContainer.appendChild(card);
         });
     }
@@ -153,6 +178,63 @@ document.addEventListener('DOMContentLoaded', async () => {
         });
     }
 
+    function renderResources(resources) {
+        resourcesContainer.innerHTML = '';
+        resources.forEach(res => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <h3 class="project-title">${res.skill} Mastery</h3>
+                <ul style="padding-left: 1.2rem; color: var(--text-muted); font-size: 0.9rem;">
+                    ${res.links.map(link => `<li style="margin: 5px 0;"><a href="${link}" target="_blank" style="color: var(--secondary);">${link.replace('https://', '').split('/')[0]}</a></li>`).join('')}
+                </ul>
+            `;
+            resourcesContainer.appendChild(card);
+        });
+    }
+
+    function renderHackathons(hackathons) {
+        hackathonContainer.innerHTML = '';
+        hackathons.forEach(h => {
+            const card = document.createElement('div');
+            card.className = 'project-card';
+            card.innerHTML = `
+                <h3 class="project-title">${h.name}</h3>
+                <p class="project-description">${h.problem_statement}</p>
+                <div class="skill-pills">
+                    ${h.skills.map(s => `<span class="pill matched" style="opacity: 0.8">${s}</span>`).join('')}
+                </div>
+                <a href="${h.link}" target="_blank" class="btn-secondary" style="display: block; text-align: center; margin-top: 15px;">Register Now</a>
+            `;
+            hackathonContainer.appendChild(card);
+        });
+    }
+
+    async function loadInterviewQuestions(tech) {
+        interviewList.innerHTML = '<li>Loading queries...</li>';
+        const data = await ApiService.getInterviewQuestions(tech);
+        interviewList.innerHTML = '';
+        if (data.questions && data.questions.length > 0) {
+            data.questions.forEach(q => {
+                const li = document.createElement('li');
+                li.style.padding = '12px 0';
+                li.style.borderBottom = '1px solid rgba(0,0,0,0.05)';
+                li.innerHTML = `<span style="color: var(--secondary); font-weight: bold; margin-right: 8px;">Q:</span> ${q}`;
+                interviewList.appendChild(li);
+            });
+        }
+    }
+
+    async function handleResumeGen(project) {
+        try {
+            const data = await ApiService.generateResume(userData, project);
+            const resume = data.resume;
+            alert(`RESUME PREVIEW GENERATED:\n\n${resume.name}\n${resume.contact}\n\nSummary: ${resume.summary}\n\nKey Project: ${resume.experience[0].title}\nDescription: ${resume.experience[0].description}`);
+        } catch (err) { alert("Failed to generate resume"); }
+    }
+
+    interviewTechSelect.onchange = () => loadInterviewQuestions(interviewTechSelect.value);
+
     function generateAiTip(projects) {
         if (!projects || projects.length === 0) return;
         const topProject = projects[0];
@@ -177,13 +259,15 @@ document.addEventListener('DOMContentLoaded', async () => {
         setTimeout(() => updateBtn.innerText = "Re-Analyze", 1500);
     });
 
-    // Reset Profile Logic
+    // Sign Out Logic
     const resetProfileBtn = document.getElementById('reset-profile');
     if (resetProfileBtn) {
+        resetProfileBtn.innerText = "Sign Out"; // Change text to be more accurate
         resetProfileBtn.addEventListener('click', (e) => {
             e.preventDefault();
-            if (confirm('Are you sure you want to change your profile? This will clear your current progress.')) {
+            if (confirm('Are you sure you want to sign out?')) {
                 localStorage.removeItem('user_data');
+                localStorage.removeItem('auth_token');
                 window.location.href = 'index.html';
             }
         });
