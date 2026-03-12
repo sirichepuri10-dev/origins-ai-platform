@@ -1,4 +1,6 @@
-const API_BASE_URL = window.location.origin; // Dynamically uses the current server URL
+const API_BASE_URL = (window.location.origin === "null" || window.location.protocol === "file:") 
+    ? "http://127.0.0.1:5000" 
+    : window.location.origin;
 
 const ApiService = {
     async getRecommendations(userData) {
@@ -84,8 +86,12 @@ const ApiService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ email, password })
         });
-        if (!response.ok) throw new Error("Login failed");
-        return await response.json();
+        
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error || "Login failed");
+        }
+        return data;
     },
 
     async register(name, email, password) {
@@ -94,8 +100,12 @@ const ApiService = {
             headers: { "Content-Type": "application/json" },
             body: JSON.stringify({ name, email, password })
         });
-        if (!response.ok) throw new Error("Registration failed");
-        return await response.json();
+        
+        const data = await response.json();
+        if (!response.ok) {
+            throw new Error(data.error || "Registration failed");
+        }
+        return data;
     },
 
     // --- Resources ---

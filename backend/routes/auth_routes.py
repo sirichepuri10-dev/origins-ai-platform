@@ -40,10 +40,21 @@ def register():
 
     new_user = User(name, email, password)
     user_data = new_user.to_json()
-    user_data['password'] = new_user.password_hash # Store hashed password
+    user_data['password'] = new_user.password_hash 
     
-    users_col.insert_one(user_data)
-    return jsonify({"message": "User registered successfully"}), 201
+    result = users_col.insert_one(user_data)
+    
+    # Generate token for auto-login
+    token = jwt.encode({
+        'user_id': str(result.inserted_id),
+        'exp': datetime.datetime.utcnow() + datetime.timedelta(hours=24)
+    }, Config.SECRET_KEY, algorithm="HS256")
+
+    return jsonify({
+        "message": "User registered successfully",
+        "token": token,
+        "user": new_user.to_json()
+    }), 201
 
 @auth_bp.route('/login', methods=['POST'])
 def login():
@@ -68,12 +79,6 @@ def login():
             },
             "message": "Logged in as Guest (DB Offline)"
         }), 200
-    email = data.get('email')
-    password = data.get('password')
-
-    if not all([email, password]):
-        return jsonify({"error": "Missing email or password"}), 400
-
     users_col = db.users
     user = users_col.find_one({"email": email})
 

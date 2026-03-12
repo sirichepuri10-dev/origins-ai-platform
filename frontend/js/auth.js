@@ -28,7 +28,8 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 window.location.href = 'dashboard.html';
             } catch (err) {
-                showError(loginError, "Invalid email or password.");
+                const message = err.message || "Invalid email or password.";
+                showError(loginError, message);
                 loginBtn.innerText = "Sign In";
             }
         });
@@ -60,17 +61,19 @@ document.addEventListener('DOMContentLoaded', () => {
                     window.location.href = 'login.html';
                 }
             } catch (err) {
-                showError(registerError, "Registration failed. Email might already be taken.");
+                const message = err.message || "Registration failed. Please try again.";
+                showError(registerError, message);
                 registerBtn.innerText = "Create Account";
             }
         });
     }
 
     function showError(element, message) {
+        if (!element) return;
         element.innerText = message;
         element.style.display = 'block';
         setTimeout(() => {
             element.style.display = 'none';
-        }, 3000);
+        }, 5000);
     }
 });
