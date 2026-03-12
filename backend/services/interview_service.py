@@ -17,7 +17,7 @@ def load_from_json(key):
 class InterviewService:
     @staticmethod
     def get_questions_by_tech(tech_name):
-        if db:
+        if db is not None:
             try:
                 record = db.interview_questions.find_one({"technology": {"$regex": f"^{tech_name}$", "$options": "i"}})
                 if record:

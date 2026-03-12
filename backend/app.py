@@ -47,7 +47,7 @@ def log_request_info():
 
 @app.route('/health')
 def health():
-    return jsonify({"status": "ok", "db": "online" if db else "offline"})
+    return jsonify({"status": "ok", "db": "online" if db is not None else "offline"})
 
 @app.route('/')
 def home():

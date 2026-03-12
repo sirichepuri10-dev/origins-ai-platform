@@ -20,7 +20,7 @@ class HackathonService:
         user_skills_set = set([s.lower() for s in user_skills])
         
         all_h = []
-        if db:
+        if db is not None:
             try:
                 all_h = list(db.hackathons.find({}, {'_id': 0}))
             except Exception:
@@ -39,7 +39,7 @@ class HackathonService:
 
     @staticmethod
     def get_all_hackathons():
-        if db:
+        if db is not None:
             try:
                 return list(db.hackathons.find({}, {'_id': 0}))
             except Exception:

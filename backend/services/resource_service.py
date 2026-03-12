@@ -17,7 +17,7 @@ def load_from_json(key):
 class ResourceService:
     @staticmethod
     def get_resources_by_skill(skill_name):
-        if db:
+        if db is not None:
             try:
                 resource = db.resources.find_one({"skill": {"$regex": f"^{skill_name}$", "$options": "i"}})
                 if resource:
@@ -34,7 +34,7 @@ class ResourceService:
 
     @staticmethod
     def get_all_resources():
-        if db:
+        if db is not None:
             try:
                 return list(db.resources.find({}, {'_id': 0}))
             except Exception:
