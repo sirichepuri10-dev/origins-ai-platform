@@ -87,11 +87,16 @@ const ApiService = {
             body: JSON.stringify({ email, password })
         });
         
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.error || "Login failed");
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Login failed");
+            return data;
+        } else {
+            const text = await response.text();
+            console.error("Non-JSON Login Response:", text);
+            throw new Error("Server Error: Received unexpected response. Please check if the backend is running.");
         }
-        return data;
     },
 
     async register(name, email, password) {
@@ -101,11 +106,16 @@ const ApiService = {
             body: JSON.stringify({ name, email, password })
         });
         
-        const data = await response.json();
-        if (!response.ok) {
-            throw new Error(data.error || "Registration failed");
+        const contentType = response.headers.get("content-type");
+        if (contentType && contentType.indexOf("application/json") !== -1) {
+            const data = await response.json();
+            if (!response.ok) throw new Error(data.error || "Registration failed");
+            return data;
+        } else {
+            const text = await response.text();
+            console.error("Non-JSON Register Response:", text);
+            throw new Error("Server Error: Received unexpected response. Please check if the backend is running.");
         }
-        return data;
     },
 
     // --- Resources ---

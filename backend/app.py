@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 from flask_cors import CORS
 from config import Config
 from routes.recommendation_routes import recommendation_bp
@@ -42,10 +42,30 @@ roadmap_service = RoadmapService(Config.MONGO_URI)
 def home():
     return app.send_static_file('index.html')
 
-# Catch-all route to serve other frontend files (dashboard.html, login.html, etc.)
+# Catch-all route to serve other frontend files
 @app.route('/<path:path>')
 def serve_static(path):
-    return app.send_static_file(path)
+    # Don't handle /api/ paths here
+    if path.startswith('api/'):
+        return jsonify({"error": "Resource not found"}), 404
+        
+    try:
+        return app.send_static_file(path)
+    except:
+        return app.send_static_file('index.html') # SPA support
+
+# Global error handler for JSON responses
+@app.errorhandler(404)
+def not_found(e):
+    if request.path.startswith('/api/'):
+        return jsonify({"error": "Not found"}), 404
+    return e
+
+@app.errorhandler(500)
+def server_error(e):
+    if request.path.startswith('/api/'):
+        return jsonify({"error": "Internal server error"}), 500
+    return e
 
 @app.route('/seed', methods=['GET'])
 def seed():
